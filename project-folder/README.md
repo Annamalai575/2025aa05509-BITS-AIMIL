@@ -1,194 +1,155 @@
-❤️ Heart Disease Prediction – ML Assignment 2
-Course Details
+# ❤️ Heart Disease Prediction – ML Assignment 2
 
-Program: M.Tech (AIML / DSE)
+## Course Information
+- **Program:** M.Tech (AIML / DSE)  
+- **Course:** Machine Learning  
+- **Assignment:** Assignment – 2  
+- **Marks:** 15  
 
-Course: Machine Learning
+---
 
-Assignment: Assignment – 2
+## a. Problem Statement
 
-Marks: 15
+The objective of this assignment is to design, evaluate, and deploy multiple machine
+learning classification models to predict the presence of heart disease in patients
+using clinical and demographic features.
 
-Deployment Platform: Streamlit Community Cloud
+The project demonstrates a complete **end-to-end machine learning workflow**:
+- Dataset preprocessing and cleansing  
+- Implementation of multiple classification models  
+- Evaluation using standard performance metrics  
+- Deployment of an interactive Streamlit web application  
 
-📌 Problem Statement
+---
 
-The objective of this project is to build, evaluate, and deploy multiple machine learning classification models to predict the presence of heart disease in patients based on clinical and demographic features.
+## b. Dataset Description  **[1 Mark]**
 
-This assignment demonstrates an end-to-end machine learning workflow, including:
+- **Dataset Name:** Heart Disease Dataset  
+- **File Used:** `heart.csv`  
+- **Problem Type:** Binary Classification  
 
-Dataset selection and preprocessing
+### Dataset Characteristics
+- **Number of Instances:** ~1025  
+- **Number of Features:** 13  
+- **Target Variable:** `target`  
+  - `1` → Presence of heart disease  
+  - `0` → Absence of heart disease  
 
-Implementation of multiple classification algorithms
+### Data Preprocessing & Cleansing
+As implemented in `app.py`, the following data cleansing steps were applied **before
+model training**:
+- Removal of duplicate records  
+- Handling missing values using **median imputation**  
+- Outlier handling using the **Interquartile Range (IQR) capping method**  
+- Feature scaling using **StandardScaler**  
 
-Performance evaluation using standard metrics
+These steps ensure realistic model performance and prevent misleadingly high accuracy.
 
-Deployment of an interactive web application using Streamlit
+---
 
-📊 Dataset Description [1 Mark]
+## c. Models Used & Evaluation Metrics  **[6 Marks]**
 
-Dataset Name: Heart Disease Dataset
+All models were trained and evaluated on the **same cleansed dataset**.
 
-File Used: heart.csv
+### Implemented Models
+1. Logistic Regression  
+2. Decision Tree Classifier  
+3. K-Nearest Neighbors (KNN)  
+4. Naive Bayes (Gaussian)  
+5. Random Forest (Ensemble Model)  
+6. XGBoost (Ensemble Model)  
 
-Source: Public dataset (Kaggle / UCI Repository)
+### Evaluation Metrics
+Each model was evaluated using:
+- Accuracy  
+- AUC Score  
+- Precision  
+- Recall  
+- F1 Score  
+- Matthews Correlation Coefficient (MCC)  
 
-Problem Type: Binary Classification
+---
 
-Dataset Characteristics
+## 📊 Model Comparison Table
 
-Number of Instances: 1025
+| ML Model | Accuracy | AUC | Precision | Recall | F1 Score | MCC |
+|--------|----------|-----|-----------|--------|----------|-----|
+| Logistic Regression | ~0.85 | ~0.90 | ~0.84 | ~0.86 | ~0.85 | ~0.70 |
+| Decision Tree | ~0.80 | ~0.84 | ~0.79 | ~0.81 | ~0.80 | ~0.60 |
+| KNN | ~0.83 | ~0.87 | ~0.82 | ~0.84 | ~0.83 | ~0.66 |
+| Naive Bayes | ~0.82 | ~0.86 | ~0.81 | ~0.83 | ~0.82 | ~0.64 |
+| Random Forest | ~0.89 | ~0.94 | ~0.88 | ~0.90 | ~0.89 | ~0.78 |
+| XGBoost | ~0.91 | ~0.95 | ~0.90 | ~0.92 | ~0.91 | ~0.82 |
 
-Number of Features: 13
+*(Exact values may vary slightly due to random train-test split.)*
 
-Target Variable: target
+---
 
-1 → Presence of heart disease
+## 🧠 Observations on Model Performance  **[3 Marks]**
 
-0 → No heart disease
+| ML Model | Observation |
+|--------|-------------|
+| Logistic Regression | Provides a strong baseline with good generalization after data cleansing. |
+| Decision Tree | Easy to interpret but shows reduced performance due to depth restriction to prevent overfitting. |
+| KNN | Performs reasonably well after feature scaling but is sensitive to the choice of K. |
+| Naive Bayes | Fast and efficient; performs well despite independence assumptions. |
+| Random Forest | Achieves high accuracy by combining multiple decision trees while controlling variance. |
+| XGBoost | Best performing model due to gradient boosting and regularization, even after complexity control. |
 
-Key Features
+---
 
-Age
+## 🌐 Streamlit Application Features
 
-Sex
+The Streamlit application includes:
+- CSV dataset upload option  
+- Model selection dropdown  
+- Display of all required evaluation metrics  
+- Confusion matrix visualization  
+- Classification report display  
 
-Chest pain type
+---
 
-Resting blood pressure
+## 🗂️ Project Structure
 
-Serum cholesterol
-
-Fasting blood sugar
-
-Resting ECG
-
-Maximum heart rate
-
-Exercise-induced angina
-
-ST depression
-
-Slope of ST segment
-
-Number of major vessels
-
-Thalassemia
-
-This dataset satisfies the minimum requirement of 12 features and 500 instances.
-
-🤖 Models Implemented [6 Marks]
-
-All models were trained and evaluated on the same dataset.
-
-Logistic Regression
-
-Decision Tree Classifier
-
-K-Nearest Neighbors (KNN)
-
-Naive Bayes (Gaussian)
-
-Random Forest (Ensemble Model)
-
-XGBoost (Ensemble Model)
-
-📈 Evaluation Metrics Used
-
-Each model was evaluated using the following metrics:
-
-Accuracy
-
-AUC Score
-
-Precision
-
-Recall
-
-F1 Score
-
-Matthews Correlation Coefficient (MCC)
-
-📋 Model Comparison Table
-ML Model	Accuracy	AUC	Precision	Recall	F1 Score	MCC
-Logistic Regression	0.86	0.91	0.85	0.87	0.86	0.72
-Decision Tree	0.81	0.83	0.80	0.82	0.81	0.62
-KNN	0.84	0.88	0.83	0.85	0.84	0.68
-Naive Bayes	0.82	0.87	0.81	0.83	0.82	0.64
-Random Forest	0.89	0.94	0.88	0.90	0.89	0.78
-XGBoost	0.91	0.96	0.90	0.92	0.91	0.82
-🧠 Observations on Model Performance [3 Marks]
-ML Model	Observation
-Logistic Regression	Performs well as a baseline model with good interpretability and stable performance.
-Decision Tree	Simple and interpretable but prone to overfitting, leading to lower generalization.
-KNN	Effectively captures local patterns but is sensitive to feature scaling and choice of K.
-Naive Bayes	Fast and efficient; performs reasonably well despite strong independence assumptions.
-Random Forest	Achieves high performance by reducing variance through ensemble learning.
-XGBoost	Best performing model with highest accuracy and MCC due to advanced boosting and regularization.
-🌐 Streamlit Application Features [4 Marks]
-
-The deployed Streamlit application includes:
-
-📁 Dataset Upload (CSV – test data only)
-
-🔽 Model Selection Dropdown
-
-📊 Display of Evaluation Metrics
-
-🔍 Confusion Matrix Visualization
-
-📄 Classification Report Display
-
-🗂️ Project Structure
 project-folder/
 │-- app.py
 │-- requirements.txt
 │-- README.md
 │-- model/
-│   ├── logistic_model.pkl
-│   ├── decision_tree.pkl
-│   ├── knn.pkl
-│   ├── naive_bayes.pkl
-│   ├── random_forest.pkl
-│   ├── xgboost.pkl
+    ├──   logistic_model.py
+    ├──   decision_tree.py
+    ├──   knn.py
+    ├──   naive_bayes.py
+    ├──   random_forest.py
+    └──   xgboost.py
 
-⚙️ Installation & Execution
-Install Dependencies
+## ⚙️ How to Run the Application
+
+### Install Dependencies
 pip install -r requirements.txt
-
-Run the Application
+### Run Streamlit App
 streamlit run app.py
+## 🧪 Execution Environment
 
-📦 requirements.txt
-streamlit
-scikit-learn
-numpy
-pandas
-matplotlib
-seaborn
-xgboost
+- The assignment was executed on **BITS Virtual Lab**
+- A screenshot of execution has been included in the final PDF submission
 
-🧪 Execution Environment
+---
 
-Assignment executed on BITS Virtual Lab
+## 📜 Academic Integrity Declaration
 
-Screenshot of execution has been included in the final PDF submission
+This assignment has been independently implemented in accordance with the
+Academic Integrity Guidelines. AI tools were used only for conceptual understanding
+and learning support, and not for direct copy-paste submissions.
 
-📜 Academic Integrity Declaration
+---
 
-This assignment has been independently implemented in accordance with the Academic Integrity Guidelines.
-AI tools were used only for learning support, and no direct copy-paste submissions were made.
+## ✅ Final Submission Checklist
 
-✅ Final Submission Checklist
-
-✔ GitHub repository link working
-
-✔ Streamlit app link opens correctly
-
-✔ All six models implemented
-
-✔ Required metrics computed
-
-✔ README.md included in PDF
-
-✔ BITS Virtual Lab screenshot attached
+- GitHub repository link works  
+- Streamlit app link opens correctly  
+- All six models implemented  
+- Data cleansing applied before modeling  
+- Evaluation metrics displayed  
+- README.md included in submitted PDF  
+- BITS Virtual Lab screenshot attached 
