@@ -3,7 +3,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-import os
+import requests
+from io import BytesIO
 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -29,26 +30,39 @@ st.set_page_config(page_title="Heart Disease Prediction", layout="wide")
 # --------------------------------------------------
 # HEADER
 # --------------------------------------------------
-st.title("Annamalai M - ML Assignment 2 Heart Disease Prediction Dashboard")
-st.markdown("### 2025aa05509 - ML Assignment 2 ")
+st.title("Annamalai M – ML Assignment 2 Heart Disease Prediction Dashboard")
+st.markdown("### 2025aa05509 – ML Assignment 2")
 
 # --------------------------------------------------
-# DATASET DOWNLOAD
+# DATASET DOWNLOAD (FROM GITHUB – CLOUD SAFE)
 # --------------------------------------------------
-st.subheader("⬇️ Dataset Download")
+st.subheader("🐙 Dataset Access – GitHub Repository")
 
-DATASET_FILE = "heart.csv"
-if os.path.exists(DATASET_FILE):
-    with open(DATASET_FILE, "rb") as f:
-        st.download_button(
-            label="Download Dataset (heart.csv from GitHub Repo)",
-            data=f,
-            file_name="heart.csv",
-            mime="text/csv"
-        )
-    st.caption("Dataset is stored in the same GitHub repository as app.py")
-else:
-    st.error("heart.csv not found in the project directory")
+GITHUB_RAW_URL = (
+    "https://raw.githubusercontent.com/"
+    "Annamalai575/2025aa05509-BITS-AIMIL/"
+    "main/project-folder/heart.csv"
+)
+
+try:
+    response = requests.get(GITHUB_RAW_URL)
+    response.raise_for_status()
+
+    st.download_button(
+        label="Download Dataset",
+        data=response.content,
+        file_name="heart.csv",
+        mime="text/csv"
+    )
+
+    st.caption(
+        "Dataset is fetched directly from the GitHub repository "
+        "and made available for download."
+    )
+
+except Exception as e:
+    st.error("Unable to fetch dataset from GitHub.")
+    st.stop()
 
 st.markdown("---")
 
@@ -56,20 +70,26 @@ st.markdown("---")
 # SIDEBAR CONTROLS
 # --------------------------------------------------
 st.sidebar.header("⚙️ Controls")
-uploaded_file = st.sidebar.file_uploader("Upload Heart Disease CSV", type=["csv"])
+
+uploaded_file = st.sidebar.file_uploader(
+    "Upload Heart Disease CSV",
+    type=["csv"]
+)
 
 if uploaded_file is None:
-    st.info("Please download or upload heart.csv to continue.")
+    st.info(
+        "Please download the dataset using the button above "
+        "or upload heart.csv to continue."
+    )
     st.stop()
 
 df = pd.read_csv(uploaded_file)
 
 # --------------------------------------------------
-# PROFESSIONAL DATASET PREVIEW
+# DATASET PREVIEW (PROFESSIONAL FORMAT)
 # --------------------------------------------------
 st.subheader("📂 Dataset Overview")
 
-# Dataset summary table
 summary_df = pd.DataFrame({
     "Attribute": ["Number of Rows", "Number of Columns", "Target Column"],
     "Value": [df.shape[0], df.shape[1], "target"]
@@ -78,15 +98,14 @@ summary_df = pd.DataFrame({
 st.markdown("#### Dataset Summary")
 st.table(summary_df)
 
-# Column names table
-st.markdown("#### Feature Details")
-columns_df = pd.DataFrame({
-    "Feature Index": range(1, len(df.columns) + 1),
+features_df = pd.DataFrame({
+    "Feature No.": range(1, len(df.columns) + 1),
     "Feature Name": df.columns
 })
-st.table(columns_df)
 
-# Dataset preview
+st.markdown("#### Feature List")
+st.table(features_df)
+
 st.markdown("#### Sample Records (First 5 Rows)")
 st.dataframe(df.head(), use_container_width=True)
 
@@ -96,6 +115,7 @@ st.markdown("---")
 # DATA CLEANSING
 # --------------------------------------------------
 df = df.drop_duplicates()
+
 imputer = SimpleImputer(strategy="median")
 df[df.columns] = imputer.fit_transform(df)
 
@@ -180,6 +200,7 @@ metrics = {
 
 c1, c2, c3 = st.columns(3)
 items = list(metrics.items())
+
 for col, pair in zip([c1, c2, c3], [items[:2], items[2:4], items[4:]]):
     with col:
         for name, val in pair:
@@ -189,6 +210,7 @@ for col, pair in zip([c1, c2, c3], [items[:2], items[2:4], items[4:]]):
 # CONFUSION MATRIX
 # --------------------------------------------------
 st.subheader("🧩 Confusion Matrix")
+
 cm = confusion_matrix(y_test, y_pred)
 fig, ax = plt.subplots(figsize=(4, 3))
 sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", ax=ax)
@@ -200,7 +222,9 @@ st.pyplot(fig)
 # CLASSIFICATION REPORT
 # --------------------------------------------------
 st.subheader("📄 Classification Report")
+
 report_df = pd.DataFrame(
     classification_report(y_test, y_pred, output_dict=True)
 ).transpose()
+
 st.dataframe(report_df, use_container_width=True)
