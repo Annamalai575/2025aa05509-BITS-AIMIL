@@ -41,7 +41,7 @@ st.subheader("🐙 Dataset Access – GitHub Repository")
 GITHUB_RAW_URL = (
     "https://raw.githubusercontent.com/"
     "Annamalai575/2025aa05509-BITS-AIMIL/"
-    "main/project-folder/heart.csv"
+    "main/project-folder/heart-disease-prediction.csv"
 )
 
 try:
@@ -51,7 +51,7 @@ try:
     st.download_button(
         label="Download Dataset",
         data=response.content,
-        file_name="heart.csv",
+        file_name="heart-disease-prediction.csv",
         mime="text/csv"
     )
 
@@ -79,7 +79,7 @@ uploaded_file = st.sidebar.file_uploader(
 if uploaded_file is None:
     st.info(
         "Please download the dataset using the button above "
-        "or upload heart.csv to continue."
+        "or upload heart-disease-prediction.csv to continue."
     )
     st.stop()
 
