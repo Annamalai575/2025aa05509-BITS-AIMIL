@@ -29,8 +29,8 @@ st.set_page_config(page_title="Heart Disease Prediction", layout="wide")
 # --------------------------------------------------
 # HEADER
 # --------------------------------------------------
-st.title("2025aa05509 - ML Assignment 2 Heart Disease Prediction Dashboard")
-st.markdown("### ML Assignment 2 – Cleansed & Realistic Evaluation")
+st.title("Annamalai M - ML Assignment 2 Heart Disease Prediction Dashboard")
+st.markdown("### 2025aa05509 - ML Assignment 2 ")
 
 # --------------------------------------------------
 # DATASET DOWNLOAD
@@ -167,7 +167,7 @@ else:
 # --------------------------------------------------
 # EVALUATION METRICS
 # --------------------------------------------------
-st.subheader("📊 Model Performance (Post-Cleansing)")
+st.subheader("📊 Model Performance")
 
 metrics = {
     "Accuracy": accuracy_score(y_test, y_pred),
