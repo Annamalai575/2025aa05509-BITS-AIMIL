@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os
 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -23,45 +24,81 @@ from xgboost import XGBClassifier
 # --------------------------------------------------
 # PAGE CONFIG
 # --------------------------------------------------
-st.set_page_config(
-    page_title="Heart Disease Prediction",
-    layout="wide"
-)
+st.set_page_config(page_title="Heart Disease Prediction", layout="wide")
 
-st.title("❤️ Heart Disease Prediction Dashboard")
+# --------------------------------------------------
+# HEADER
+# --------------------------------------------------
+st.title("2025aa05509 - ML Assignment 2 Heart Disease Prediction Dashboard")
 st.markdown("### ML Assignment 2 – Cleansed & Realistic Evaluation")
+
+# --------------------------------------------------
+# DATASET DOWNLOAD
+# --------------------------------------------------
+st.subheader("⬇️ Dataset Download")
+
+DATASET_FILE = "heart.csv"
+if os.path.exists(DATASET_FILE):
+    with open(DATASET_FILE, "rb") as f:
+        st.download_button(
+            label="Download Dataset (heart.csv from GitHub Repo)",
+            data=f,
+            file_name="heart.csv",
+            mime="text/csv"
+        )
+    st.caption("Dataset is stored in the same GitHub repository as app.py")
+else:
+    st.error("heart.csv not found in the project directory")
+
+st.markdown("---")
 
 # --------------------------------------------------
 # SIDEBAR CONTROLS
 # --------------------------------------------------
 st.sidebar.header("⚙️ Controls")
-uploaded_file = st.sidebar.file_uploader(
-    "Upload Heart Disease CSV",
-    type=["csv"]
-)
+uploaded_file = st.sidebar.file_uploader("Upload Heart Disease CSV", type=["csv"])
 
 if uploaded_file is None:
-    st.info("Please upload heart.csv to continue.")
+    st.info("Please download or upload heart.csv to continue.")
     st.stop()
 
 df = pd.read_csv(uploaded_file)
 
 # --------------------------------------------------
-# DATA CLEANSING (IMPORTANT PART)
+# PROFESSIONAL DATASET PREVIEW
 # --------------------------------------------------
-st.subheader("🧹 Data Cleansing Steps Applied")
+st.subheader("📂 Dataset Overview")
 
-# 1. Remove duplicates
-initial_rows = df.shape[0]
+# Dataset summary table
+summary_df = pd.DataFrame({
+    "Attribute": ["Number of Rows", "Number of Columns", "Target Column"],
+    "Value": [df.shape[0], df.shape[1], "target"]
+})
+
+st.markdown("#### Dataset Summary")
+st.table(summary_df)
+
+# Column names table
+st.markdown("#### Feature Details")
+columns_df = pd.DataFrame({
+    "Feature Index": range(1, len(df.columns) + 1),
+    "Feature Name": df.columns
+})
+st.table(columns_df)
+
+# Dataset preview
+st.markdown("#### Sample Records (First 5 Rows)")
+st.dataframe(df.head(), use_container_width=True)
+
+st.markdown("---")
+
+# --------------------------------------------------
+# DATA CLEANSING
+# --------------------------------------------------
 df = df.drop_duplicates()
-st.write(f"✔ Removed duplicates: {initial_rows - df.shape[0]} rows")
-
-# 2. Handle missing values
 imputer = SimpleImputer(strategy="median")
 df[df.columns] = imputer.fit_transform(df)
-st.write("✔ Missing values handled using median strategy")
 
-# 3. Outlier capping (IQR method)
 def cap_outliers(data):
     capped = data.copy()
     for col in capped.columns:
@@ -69,13 +106,14 @@ def cap_outliers(data):
             Q1 = capped[col].quantile(0.25)
             Q3 = capped[col].quantile(0.75)
             IQR = Q3 - Q1
-            lower = Q1 - 1.5 * IQR
-            upper = Q3 + 1.5 * IQR
-            capped[col] = np.clip(capped[col], lower, upper)
+            capped[col] = np.clip(
+                capped[col],
+                Q1 - 1.5 * IQR,
+                Q3 + 1.5 * IQR
+            )
     return capped
 
 df = cap_outliers(df)
-st.write("✔ Outliers capped using IQR method")
 
 # --------------------------------------------------
 # FEATURE / TARGET SPLIT
@@ -84,10 +122,7 @@ X = df.drop("target", axis=1)
 y = df["target"]
 
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y,
-    test_size=0.25,
-    random_state=42,
-    stratify=y
+    X, y, test_size=0.25, random_state=42, stratify=y
 )
 
 scaler = StandardScaler()
@@ -95,18 +130,14 @@ X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
 # --------------------------------------------------
-# MODELS (COMPLEXITY CONTROLLED)
+# MODELS
 # --------------------------------------------------
 models = {
     "Logistic Regression": LogisticRegression(max_iter=1000),
     "Decision Tree": DecisionTreeClassifier(max_depth=4, random_state=42),
     "K-Nearest Neighbors": KNeighborsClassifier(n_neighbors=7),
     "Naive Bayes": GaussianNB(),
-    "Random Forest": RandomForestClassifier(
-        n_estimators=120,
-        max_depth=6,
-        random_state=42
-    ),
+    "Random Forest": RandomForestClassifier(n_estimators=120, max_depth=6, random_state=42),
     "XGBoost": XGBClassifier(
         n_estimators=120,
         max_depth=4,
@@ -118,11 +149,7 @@ models = {
     )
 }
 
-model_name = st.sidebar.selectbox(
-    "Select ML Model",
-    list(models.keys())
-)
-
+model_name = st.sidebar.selectbox("Select ML Model", list(models.keys()))
 model = models[model_name]
 
 # --------------------------------------------------
@@ -138,7 +165,7 @@ else:
     y_prob = model.predict_proba(X_test)[:, 1]
 
 # --------------------------------------------------
-# METRICS
+# EVALUATION METRICS
 # --------------------------------------------------
 st.subheader("📊 Model Performance (Post-Cleansing)")
 
@@ -153,7 +180,6 @@ metrics = {
 
 c1, c2, c3 = st.columns(3)
 items = list(metrics.items())
-
 for col, pair in zip([c1, c2, c3], [items[:2], items[2:4], items[4:]]):
     with col:
         for name, val in pair:
@@ -164,7 +190,6 @@ for col, pair in zip([c1, c2, c3], [items[:2], items[2:4], items[4:]]):
 # --------------------------------------------------
 st.subheader("🧩 Confusion Matrix")
 cm = confusion_matrix(y_test, y_pred)
-
 fig, ax = plt.subplots(figsize=(4, 3))
 sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", ax=ax)
 ax.set_xlabel("Predicted")
@@ -178,14 +203,4 @@ st.subheader("📄 Classification Report")
 report_df = pd.DataFrame(
     classification_report(y_test, y_pred, output_dict=True)
 ).transpose()
-st.dataframe(report_df)
-
-# --------------------------------------------------
-# FOOTER
-# --------------------------------------------------
-# st.markdown("---")
-# st.markdown(
-#     "✔ Dataset cleansed before modeling  \n"
-#     "✔ Outliers handled, complexity controlled  \n"
-#     "✔ Metrics now reflect realistic ML performance"
-# )
+st.dataframe(report_df, use_container_width=True)
