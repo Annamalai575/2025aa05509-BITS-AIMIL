@@ -30,8 +30,8 @@ st.set_page_config(page_title="Heart Disease Prediction", layout="wide")
 # --------------------------------------------------
 # HEADER
 # --------------------------------------------------
-st.title("Annamalai M – ML Assignment 2 Heart Disease Prediction Dashboard")
-st.markdown("### 2025aa05509 – ML Assignment 2")
+st.title("❤️ Heart Disease Risk Analysis Dashboard ❤️")
+st.markdown("### Annamalai M – 2025aa05509 – ML Assignment 2")
 
 # --------------------------------------------------
 # DATASET DOWNLOAD (FROM GITHUB – CLOUD SAFE)
