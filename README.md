@@ -74,7 +74,7 @@ Each model was evaluated using:
 
 | ML Model | Accuracy | AUC | Precision | Recall | F1 Score | MCC |
 |--------|----------|-----|-----------|--------|----------|-----|
-| Logistic Regression | ~0.85 | ~0.90 | ~0.84 | ~0.86 | ~0.85 | ~0.70 |
+| Logistic Regression | 0.829 | ~0.90 | ~0.84 | ~0.86 | ~0.85 | ~0.70 |
 | Decision Tree | ~0.80 | ~0.84 | ~0.79 | ~0.81 | ~0.80 | ~0.60 |
 | KNN | ~0.83 | ~0.87 | ~0.82 | ~0.84 | ~0.83 | ~0.66 |
 | Naive Bayes | ~0.82 | ~0.86 | ~0.81 | ~0.83 | ~0.82 | ~0.64 |
