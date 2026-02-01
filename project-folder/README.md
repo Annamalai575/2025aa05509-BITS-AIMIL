@@ -143,12 +143,17 @@ and learning support, and not for direct copy-paste submissions.
 
 ---
 
-**Deployment Details**
-**Platform used = Streamlit Community Cloud
-Python Version used = 3.10
-Deployment Type = Free Tier
-GitHub Repository = https://github.com/Annamalai575/2025aa05509-BITS-AIMIL/tree/main/project-folder
-Live Application URL = https://2025aa05509-bits-aimil-gzspr2hjgibbzsjxgaypmq.streamlit.app/**
+**Submission Details**
+
+Platform Used: Streamlit Community Cloud
+
+Python Version Used: 3.10
+
+Deployment Type: Free Tier
+
+GitHub Repository: https://github.com/Annamalai575/2025aa05509-BITS-AIMIL/tree/main/project-folder
+
+Live Application URL: https://2025aa05509-bits-aimil-gzspr2hjgibbzsjxgaypmq.streamlit.app/
 
 
 ## ✅ Final Submission Checklist
@@ -160,5 +165,6 @@ Live Application URL = https://2025aa05509-bits-aimil-gzspr2hjgibbzsjxgaypmq.str
 - Evaluation metrics displayed  
 - README.md included in submitted PDF  
 - BITS Virtual Lab screenshot attached 
+
 
 
