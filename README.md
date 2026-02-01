@@ -75,11 +75,11 @@ Each model was evaluated using:
 | ML Model | Accuracy | AUC | Precision | Recall | F1 Score | MCC |
 |--------|----------|-----|-----------|--------|----------|-----|
 | Logistic Regression | 0.829 | 0.89 | 0.818 | 0.878 | 0.847 | 0.656 |
-| Decision Tree | ~0.80 | ~0.84 | ~0.79 | ~0.81 | ~0.80 | ~0.60 |
-| KNN | ~0.83 | ~0.87 | ~0.82 | ~0.84 | ~0.83 | ~0.66 |
-| Naive Bayes | ~0.82 | ~0.86 | ~0.81 | ~0.83 | ~0.82 | ~0.64 |
-| Random Forest | ~0.89 | ~0.94 | ~0.88 | ~0.90 | ~0.89 | ~0.78 |
-| XGBoost | ~0.91 | ~0.95 | ~0.90 | ~0.92 | ~0.91 | ~0.82 |
+| Decision Tree | 0.75 | 0.827 | 0.789 | 0.732 | 0.759 | 0.502 |
+| KNN | 0.803 | 0.864 | 0.81 | 0.829 | 0.819 | 0.602 |
+| Naive Bayes | 0.816 | 0.891 | 0.846 | 0.805 | 0.825 | 0.632 |
+| Random Forest | 0.776 | 0.856 | 0.786 | 0.805 | 0.795 | 0.549 |
+| XGBoost | 0.763 |0.863 | 0.767 | 0.805 | 0.786 | 0.522 |
 
 *(Exact values may vary slightly due to random train-test split.)*
 
