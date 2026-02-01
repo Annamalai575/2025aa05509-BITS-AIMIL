@@ -81,7 +81,6 @@ Each model was evaluated using:
 | Random Forest | 0.776 | 0.856 | 0.786 | 0.805 | 0.795 | 0.549 |
 | XGBoost | 0.763 |0.863 | 0.767 | 0.805 | 0.786 | 0.522 |
 
-*(Exact values may vary slightly due to random train-test split.)*
 
 ---
 
