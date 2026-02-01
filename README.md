@@ -143,7 +143,7 @@ and learning support, and not for direct copy-paste submissions.
 
 ---
 
-**Deployment Details**
+**Submission Details**
 
 Platform Used: Streamlit Community Cloud
 
